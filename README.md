@@ -48,7 +48,10 @@ cloudsmith resync acme-corporation/acme-repo-one/AVcNRPG0ILFP
 
 ![Screenshot 2025-05-06 at 09 57 38](https://github.com/user-attachments/assets/79977e5b-3d65-49ce-9fcf-f52cb0d41c57)
 
-
+If the package contains unwanted CVEs you can quarantine it immediately:
+```
+cloudsmith quarantine add acme-corporation/acme-repo-one/AVcNRPG0ILFP
+```
 
 ## Moving Forward
 
