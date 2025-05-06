@@ -5,7 +5,7 @@ Basic commands for using Cloudsmith CLI effectively
 export CLOUDSMITH_API_KEY=
 ```
 ```
-DOG_NAME="sadie"
+export DOG_NAME="sadie"
 ```
 
 
