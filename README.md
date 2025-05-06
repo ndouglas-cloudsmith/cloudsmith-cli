@@ -52,6 +52,12 @@ If the package contains unwanted CVEs you can quarantine it immediately:
 ```
 cloudsmith quarantine add acme-corporation/acme-repo-one/AVcNRPG0ILFP
 ```
+```
+cloudsmith quarantine remove acme-corporation/acme-repo-one/AVcNRPG0ILFP
+```
+
+![Screenshot 2025-05-06 at 11 21 14](https://github.com/user-attachments/assets/55e5afdc-18c5-473f-a31b-d8c5114f6282)
+
 
 ## Moving Forward
 
