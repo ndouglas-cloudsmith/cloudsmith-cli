@@ -35,8 +35,19 @@ cloudsmith tags add acme-corporation/acme-repo-one/<package-name> happy,hungry -
 
 Step 6: Let's see the full SBOM (Software Bill of Materials) for our newly-updated artifact:
 ```
-cloudsmith list packages acme-corporation/acme-repo-one -F pretty_json | jq --arg name "$DOG_NAME" '.data[] | select(.display_name == $name)'
+cloudsmith list packages acme-corporation/acme-repo-one -F pretty_json | jq --arg name "nginx" '.data[] | select(.display_name == $name)'
 ```
+
+![Screenshot 2025-05-06 at 09 58 02](https://github.com/user-attachments/assets/4bffa8cb-426a-40e5-9081-da101d21c86d)
+
+
+From here you can find the ```slug_perm``` value for synchronizing our package:
+```
+cloudsmith resync acme-corporation/acme-repo-one/AVcNRPG0ILFP
+```
+
+![Screenshot 2025-05-06 at 09 57 38](https://github.com/user-attachments/assets/79977e5b-3d65-49ce-9fcf-f52cb0d41c57)
+
 
 
 ## Moving Forward
