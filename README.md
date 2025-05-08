@@ -67,18 +67,69 @@ cloudsmith quarantine remove acme-corporation/acme-repo-one/AVcNRPG0ILFP
 # Create a binary file of 500 bytes filled with random data
 head -c 500 /dev/urandom > bark-of-the-beast.bin
 
-# Embed the flag at byte offset 200
-printf 'flag-G2W7YkBBPCn103ww' | dd of=bark-of-the-beast.bin bs=1 seek=200 conv=notrunc
+# Helper function to embed a flag in parts at a given offset
+embed_flag() {
+    local offset=$1
+    local flag=$2
+    local chunk_size=$3
+
+    # Split the flag into chunks
+    for ((i=0; i<${#flag}; i+=chunk_size)); do
+        chunk=${flag:i:chunk_size}
+        # Insert null byte or other non-printable between parts
+        printf "$chunk\0" | dd of=bark-of-the-beast.bin bs=1 seek=$offset conv=notrunc status=none
+        offset=$((offset + chunk_size + 1))
+    done
+}
+
+# Embed multiple flags at different locations
+embed_flag 57  'flag-A1B2C3D4E5F6G7H8' 4
+embed_flag 123 'flag-X9Y8Z7W6V5U4T3S2' 3
+embed_flag 299 'flag-JKLMNOPQRSTUVWX' 5
+
+# Optionally, also XOR encode one flag to increase difficulty
+xor_encode_flag() {
+    local offset=$1
+    local flag=$2
+    local key=0x4F
+
+    for ((i=0; i<${#flag}; i++)); do
+        char=${flag:i:1}
+        xor_char=$(printf "%d" "'$char")
+        xor_char=$((xor_char ^ key))
+        printf "\\x$(printf '%02x' $xor_char)" | dd of=bark-of-the-beast.bin bs=1 seek=$((offset+i)) conv=notrunc status=none
+    done
+}
+
+# Embed XOR-obfuscated flag
+xor_encode_flag 420 'flag-SECRETXOR12345'
 ```
 
+If the flag is embedded plainly (as in your original script)
+<br/> You can extract it using:
 ```
-strings bark-of-the-beast.bin | grep flag
+strings bark-of-the-beast.bin | grep 'flag-'
 ```
+This works because:
+1. strings pulls out printable ASCII sequences.
+2. The flag is embedded in cleartext at a known offset (e.g., byte 200).
+
+
+### If the flag is embedded in pieces or broken by null bytes
+strings won't help directly since it breaks on non-printables (\x00, etc.). <br/>
+You can use xxd or hexdump to visually inspect the file:
 
 ```
 xxd -s 200 -l 32 bark-of-the-beast.bin
+xxd bark-of-the-beast.bin | less
 ```
 
+Then look around the known offsets (e.g., 57, 123, 299) for parts of the flag. If it's split, you'll see it as:
+```
+00000039: 66 6c 61 67 00 41 31 42 32 00 43 33 44 34 00 45  flag.A1B2.C3D4.E
+```
+
+Push it to Cloudsmith
 ```
 cloudsmith push raw acme-corporation/acme-repo-one bark-of-the-beast.bin -k "$CLOUDSMITH_API_KEY"
 ```
