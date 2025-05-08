@@ -59,5 +59,26 @@ cloudsmith quarantine remove acme-corporation/acme-repo-one/AVcNRPG0ILFP
 ![Screenshot 2025-05-06 at 11 21 14](https://github.com/user-attachments/assets/55e5afdc-18c5-473f-a31b-d8c5114f6282)
 
 
-## Moving Forward
+## Steganography Stuff
 
+```
+#!/bin/bash
+
+# Create a binary file of 500 bytes filled with random data
+head -c 500 /dev/urandom > bark-of-the-beast.bin
+
+# Embed the flag at byte offset 200
+printf 'flag-G2W7YkBBPCn103ww' | dd of=bark-of-the-beast.bin bs=1 seek=200 conv=notrunc
+```
+
+```
+strings bark-of-the-beast.bin | grep flag
+```
+
+```
+xxd -s 200 -l 32 bark-of-the-beast.bin
+```
+
+```
+cloudsmith push raw acme-corporation/acme-repo-one bark-of-the-beast.bin -k "$CLOUDSMITH_API_KEY"
+```
