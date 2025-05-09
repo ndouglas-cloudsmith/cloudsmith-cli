@@ -102,3 +102,12 @@ Push it to Cloudsmith
 ```
 cloudsmith push raw acme-corporation/acme-repo-one bark-of-the-beast.bin -k "$CLOUDSMITH_API_KEY"
 ```
+
+### Pointless Music Stuff
+```
+apt install ffmpeg
+```
+
+```
+ffprobe site__assets_audio_cloudsmithin.mp3
+```
