@@ -33,6 +33,11 @@ For the below example, I added ```happy``` and ```hungry```, but you can add wha
 cloudsmith tags add acme-corporation/acme-repo-one/<package-name> happy,hungry -k "$CLOUDSMITH_API_KEY"
 ```
 
+For example, you can remove a tag that was incorrectly assigned:
+```
+cloudsmith tags remove acme-corporation/acme-repo-one/spotipy-2250-py3-none-anywhl-pgk6 flag-kqE7a0Mr5Yld -k "$CLOUDSMITH_API_KEY"
+```
+
 Step 6: Let's see the full SBOM (Software Bill of Materials) for our newly-updated artifact:
 ```
 cloudsmith list packages acme-corporation/acme-repo-one -F pretty_json | jq --arg name "nginx" '.data[] | select(.display_name == $name)'
