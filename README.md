@@ -120,8 +120,7 @@ ffprobe site__assets_audio_cloudsmithin.mp3
 curl -s -X GET "https://api.cloudsmith.io/v1/packages/acme-corporation/acme-repo-one/"   -H "Accept: application/json"   -H "X-Api-Key: $API_KEY" |   jq '.[] | select(any(.tags.info[]?; test("latest")))'
 ```
 
-## Bulk Package Cleanup
-
+## Bulk Package Download
 
 Download 30 copies of the same file
 ```
@@ -136,9 +135,20 @@ Run the bulk download script
 ./download-copies.sh
 ```
 
+### Bulk Push
+Bulk push all the recently downloaded artifacts to Cloudsmith:
+```
+wget https://raw.githubusercontent.com/ndouglas-cloudsmith/cloudsmith-cli/refs/heads/main/bulk-push.sh
+chmod +x bulk-push.sh
+./bulk-push.sh
+```
+
+### Bulk Cleanup
 Download the package cleanup script
 ```
 wget https://raw.githubusercontent.com/ndouglas-cloudsmith/cloudsmith-cli/refs/heads/main/cleanup.sh
+chmod +x cleanup.sh
+./cleanup.sh
 ```
 Clean the old files from your desktop
 ```
