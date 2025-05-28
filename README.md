@@ -143,6 +143,15 @@ chmod +x bulk-push.sh
 ./bulk-push.sh
 ```
 
+To search for all python packages larger than 2KB with more than 50 downloads:
+```
+cloudsmith list packages cloudsmith/examples -q "format:python AND downloads:>50 AND size:>2048"
+```
+
+![cloudsmith](https://github.com/user-attachments/assets/8b6b96ed-fee2-4c65-bc5a-12d26903397c)
+
+
+
 ### Bulk Cleanup
 Download the package cleanup script
 ```
