@@ -127,3 +127,20 @@ Download 30 copies of the same file
 ```
 wget https://raw.githubusercontent.com/ndouglas-cloudsmith/cloudsmith-cli/refs/heads/main/download-copies.sh
 ```
+Make the file executable
+```
+chmod +x download-copies.sh
+```
+Run the bulk download script
+```
+./download-copies.sh
+```
+
+Download the package cleanup script
+```
+wget https://raw.githubusercontent.com/ndouglas-cloudsmith/cloudsmith-cli/refs/heads/main/cleanup.sh
+```
+Clean the old files from your desktop
+```
+rm -v ~/*.whl
+```
