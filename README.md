@@ -119,3 +119,11 @@ ffprobe site__assets_audio_cloudsmithin.mp3
 ```
 curl -s -X GET "https://api.cloudsmith.io/v1/packages/acme-corporation/acme-repo-one/"   -H "Accept: application/json"   -H "X-Api-Key: $API_KEY" |   jq '.[] | select(any(.tags.info[]?; test("latest")))'
 ```
+
+## Bulk Package Cleanup
+
+
+Download 30 copies of the same file
+```
+wget https://raw.githubusercontent.com/ndouglas-cloudsmith/cloudsmith-cli/refs/heads/main/download-copies.sh
+```
