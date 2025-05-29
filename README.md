@@ -175,7 +175,7 @@ wget https://raw.githubusercontent.com/ndouglas-cloudsmith/cloudsmith-cli/refs/h
 
 You can generate this with a shell script:
 ```
-escaped_policy=$(jq -Rs . < policy.rego)
+escaped_policy=$(jq -Rs . < license.rego)
 
 cat <<EOF > policy_with_payload.json
 {
@@ -187,4 +187,40 @@ cat <<EOF > policy_with_payload.json
   "precedence": 2
 }
 EOF
+```
+
+### Use the policy_with_payload.json in an API call to create a policy
+
+```
+curl -X POST "https://api.cloudsmith.io/v2/orgs/$CLOUDSMITH_ORG/policies/" \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: $CLOUDSMITH_API_KEY" \
+  -d @payload.json | jq .
+```
+
+You can extract the **slug_perm** value from the JSON output using **jq** and then export it as an environment variable in a single command like this:
+```
+export SLUG_PERM=$(curl -s -X GET "https://api.cloudsmith.io/v2/orgs/acme-corporation/policies/" -H "X-Api-Key: $CLOUDSMITH_API_KEY" | jq -r '.results[0].slug_perm')
+```
+
+Attach a tagging action:
+```
+curl -X POST "https://api.cloudsmith.io/v2/orgs/acme-corporation/policies/$SLUG_PERM/actions/" \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: $CLOUDSMITH_API_KEY" \
+  -d '{
+    "action_type": "AddPackageTags",
+    "precedence": 32767,
+    "tags": ["non-compliant-license"]
+  }'
+```
+
+GNU Lesser General Public License v3 permits you to use, modify, and distribute the software, even in proprietary applications, provided that any modifications to the LGPL-covered components are also licensed under the LGPL. It's a common choice for libraries intended to be used within other software.
+```
+pip download python-gitlab==3.1.1 && mv python_gitlab-*.whl "$SLUG_PERM.whl" --tags workflow2
+```
+
+Let's see if the packages was assigned the new tags:
+```
+cloudsmith list packages acme-corporation/acme-repo-one -k "$CLOUDSMITH_API_KEY" -q "format:python AND tag:workflow2"
 ```
