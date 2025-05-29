@@ -180,6 +180,10 @@ tar -tzf nigel-sample-chart-0.1.0.tgz
 ```
 cloudsmith push helm acme-corporation/acme-repo-one nigel-sample-chart-0.1.0.tgz -k "$CLOUDSMITH_API_KEY"
 ```
+Check status of the package [Optional]
+```
+cloudsmith status acme-corporation/acme-repo-one/nigel-sample-chart-010tgz-yefa -k "$CLOUDSMITH_API_KEY"
+```
 
 ## Embed Rego policy into a JSON payload file (self-contained policy-as-data)
 My goal is to store and transmit the policy with metadata (like through an API). <br/>
