@@ -212,7 +212,7 @@ EOF
 ### Use the policy_with_payload.json in an API call to create a policy
 
 ```
-curl -X POST "https://api.cloudsmith.io/v2/orgs/$CLOUDSMITH_ORG/policies/" \
+curl -X POST "https://api.cloudsmith.io/v2/orgs/acme-corporation/policies/" \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: $CLOUDSMITH_API_KEY" \
   -d @policy_with_payload.json | jq .
