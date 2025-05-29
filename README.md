@@ -164,6 +164,19 @@ Clean the old files from your desktop
 rm -v ~/*.whl
 ```
 
+## Helm Stuff
+```
+helm create nigel-sample-chart
+```
+```
+helm package nigel-sample-chart
+```
+```
+tar -tzf nigel-sample-chart-0.1.0.tgz
+```
+```
+cloudsmith push helm acme-corporation/acme-repo-one nigel-sample-chart-0.1.0.tgz -k "$CLOUDSMITH_API_KEY"
+```
 
 ## Embed Rego policy into a JSON payload file (self-contained policy-as-data)
 My goal is to store and transmit the policy with metadata (like through an API). <br/>
