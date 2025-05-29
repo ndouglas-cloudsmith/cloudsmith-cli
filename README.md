@@ -237,7 +237,11 @@ curl -X POST "https://api.cloudsmith.io/v2/orgs/acme-corporation/policies/$SLUG_
 
 GNU Lesser General Public License v3 permits you to use, modify, and distribute the software, even in proprietary applications, provided that any modifications to the LGPL-covered components are also licensed under the LGPL. It's a common choice for libraries intended to be used within other software.
 ```
-pip download python-gitlab==3.1.1 && mv python_gitlab-*.whl "$SLUG_PERM.whl" --tags workflow2
+pip download python-gitlab==3.1.1 && mv python_gitlab-*.whl "$SLUG_PERM.whl"
+```
+Upload to Cloudsmith to see if the package is correctly quarantined:
+```
+cloudsmith push python acme-corporation/acme-repo-one $SLUG_PERM.whl -k "$CLOUDSMITH_API_KEY"  --tags workflow2
 ```
 
 Let's see if the packages was assigned the new tags:
