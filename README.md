@@ -215,7 +215,7 @@ EOF
 curl -X POST "https://api.cloudsmith.io/v2/orgs/$CLOUDSMITH_ORG/policies/" \
   -H "Content-Type: application/json" \
   -H "X-Api-Key: $CLOUDSMITH_API_KEY" \
-  -d @payload.json | jq .
+  -d @policy_with_payload.json | jq .
 ```
 
 You can extract the **slug_perm** value from the JSON output using **jq** and then export it as an environment variable in a single command like this:
