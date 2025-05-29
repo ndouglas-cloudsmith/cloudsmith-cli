@@ -166,6 +166,9 @@ rm -v ~/*.whl
 
 ## Helm Stuff
 ```
+cloudsmith list packages acme-corporation/acme-repo-one -k "$CLOUDSMITH_API_KEY"
+```
+```
 helm create nigel-sample-chart
 ```
 ```
