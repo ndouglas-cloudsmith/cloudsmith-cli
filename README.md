@@ -163,3 +163,12 @@ Clean the old files from your desktop
 ```
 rm -v ~/*.whl
 ```
+
+
+## Embed Rego policy into a JSON payload file (self-contained policy-as-data)
+My goal is to store and transmit the policy with metadata (like through an API). <br/>
+I created a self-contained JSON file with the Rego policy embedded as a string.
+
+```
+wget 
+```
