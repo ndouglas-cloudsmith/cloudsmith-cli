@@ -170,5 +170,21 @@ My goal is to store and transmit the policy with metadata (like through an API).
 I created a self-contained JSON file with the Rego policy embedded as a string.
 
 ```
-wget 
+wget https://raw.githubusercontent.com/ndouglas-cloudsmith/cloudsmith-cli/refs/heads/main/license.rego
+```
+
+You can generate this with a shell script:
+```
+escaped_policy=$(jq -Rs . < policy.rego)
+
+cat <<EOF > policy_with_payload.json
+{
+  "name": "ea-workflow2",
+  "description": "Flag any package with a GPL License used in production",
+  "rego": $escaped_policy,
+  "enabled": true,
+  "is_terminal": false,
+  "precedence": 2
+}
+EOF
 ```
