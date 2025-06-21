@@ -37,6 +37,9 @@ For example, you can remove a tag that was incorrectly assigned:
 ```
 cloudsmith tags remove acme-corporation/acme-repo-one/spotipy-2250-py3-none-anywhl-pgk6 flag-kqE7a0Mr5Yld -k "$CLOUDSMITH_API_KEY"
 ```
+```
+cloudsmith list packages acme-corporation/acme-repo-one -q "format:python"
+```
 
 Step 6: Let's see the full SBOM (Software Bill of Materials) for our newly-updated artifact:
 ```
@@ -44,7 +47,6 @@ cloudsmith list packages acme-corporation/acme-repo-one -F pretty_json | jq --ar
 ```
 
 ![Screenshot 2025-05-06 at 09 58 02](https://github.com/user-attachments/assets/4bffa8cb-426a-40e5-9081-da101d21c86d)
-
 
 From here you can find the ```slug_perm``` value for synchronizing our package:
 ```
