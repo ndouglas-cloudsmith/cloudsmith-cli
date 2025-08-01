@@ -250,3 +250,45 @@ Let's see if the packages was assigned the new tags:
 ```
 cloudsmith list packages acme-corporation/acme-repo-one -k "$CLOUDSMITH_API_KEY" -q "format:python AND tag:workflow2"
 ```
+
+### Check the JSON structure for Decision Logs
+This will find all objects with ```uploaded_at``` and show their paths, which helps us know where it is.
+
+```
+curl -X GET \
+  "https://api.cloudsmith.io/v2/workspaces/acme-corporation/policies/decision_logs/?policy=$SLUG_PERM" \
+  -H "Accept: application/json" \
+  -H "X-Api-Key: $CLOUDSMITH_API_KEY" | jq '.. | objects | select(has("uploaded_at")) | {uploaded_at, path: path(.)}'
+```
+
+Search for packages uploaded on ```August 1st 2025```.
+```
+curl -X GET \
+  "https://api.cloudsmith.io/v2/workspaces/acme-corporation/policies/decision_logs/?policy=$SLUG_PERM" \
+  -H "Accept: application/json" \
+  -H "X-Api-Key: $CLOUDSMITH_API_KEY" |  jq '
+  [ .results[]
+    | select((.uploaded_at // "") | type == "string" and startswith("2025-08-01"))
+  ]
+'
+```
+
+Check for Null or Missing fields associated with uploaded_at
+```
+curl -X GET \
+  "https://api.cloudsmith.io/v2/workspaces/acme-corporation/policies/decision_logs/?policy=$SLUG_PERM" \
+  -H "Accept: application/json" \
+  -H "X-Api-Key: $CLOUDSMITH_API_KEY" | jq '
+  [.results[].uploaded_at] | unique | .[:10]
+'
+```
+```
+curl -X GET \
+  "https://api.cloudsmith.io/v2/workspaces/acme-corporation/policies/decision_logs/?policy=$SLUG_PERM" \
+  -H "Accept: application/json" \
+  -H "X-Api-Key: $CLOUDSMITH_API_KEY" | jq '
+  [.results[].uploaded_at // "MISSING"] | unique | .[:10]
+'
+```
+
+<img width="694" height="335" alt="Screenshot 2025-08-01 at 10 31 44" src="https://github.com/user-attachments/assets/928db9bd-6c93-4a7d-96ba-716abfb74917" />
